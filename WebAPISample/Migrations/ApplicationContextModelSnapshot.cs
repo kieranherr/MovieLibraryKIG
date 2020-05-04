@@ -28,12 +28,52 @@ namespace WebAPISample.Migrations
                     b.Property<string>("Director")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Genre")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MovieId");
 
                     b.ToTable("Movies");
+
+                    b.HasData(
+                        new
+                        {
+                            MovieId = 1,
+                            Director = "Martin Scorsese",
+                            Genre = "Drama",
+                            Title = "The Departed"
+                        },
+                        new
+                        {
+                            MovieId = 2,
+                            Director = "Christopher Nolan",
+                            Genre = "Drama",
+                            Title = "The Dark Knight"
+                        },
+                        new
+                        {
+                            MovieId = 3,
+                            Director = "Christopher Nolan",
+                            Genre = "Drama",
+                            Title = "Inception"
+                        },
+                        new
+                        {
+                            MovieId = 4,
+                            Director = "David Gordon Green",
+                            Genre = "Comedy",
+                            Title = "Pineapple Express"
+                        },
+                        new
+                        {
+                            MovieId = 5,
+                            Director = "John McTiernan",
+                            Genre = "Action",
+                            Title = "Die Hard"
+                        });
                 });
 #pragma warning restore 612, 618
         }
