@@ -23,7 +23,9 @@ namespace WebAPISample.Controllers
         public IActionResult Get()
         {
             // Retrieve all movies from db logic
-            return Ok(new string[] { "movie1 string", "movie2 string" });
+
+            var movies = _context.Movies;
+            return Ok(movies);
         }
 
         // GET api/movie/5
@@ -31,16 +33,28 @@ namespace WebAPISample.Controllers
         public IActionResult Get(int id)
         {
             // Retrieve movie by id from db logic
+            Movie movie = new Movie();
             // return Ok(movie);
-            return Ok();
+            movie = _context.Movies.Find(id);
+            return Ok(movie);
         }
 
         // POST api/movie
         [HttpPost]
         public IActionResult Post([FromBody]Movie value)
         {
+            Movie movie = new Movie
+            {
+                Title = value.Title,
+                Director = value.Director,
+                Genre = value.Genre
+
+            };
+            _context.Movies.Add(movie);
+            _context.SaveChanges();
+
             // Create movie in db logic
-            return Ok();
+            return Ok(movie);   
         }
 
         // PUT api/movie
@@ -48,6 +62,11 @@ namespace WebAPISample.Controllers
         public IActionResult Put([FromBody] Movie movie)
         {
             // Update movie in db logic
+            var movieInDb = _context.Movies.Where(a => a.MovieId == movie.MovieId).FirstOrDefault();
+            movieInDb.Title = movie.Title;
+            movieInDb.Director = movie.Director;
+            movieInDb.Genre = movie.Genre;
+            _context.SaveChanges();
             return Ok();
         }
 
@@ -55,6 +74,10 @@ namespace WebAPISample.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            var movie = _context.Movies.Where(b => b.MovieId == id).FirstOrDefault();
+            _context.Movies.Remove(movie);
+            _context.SaveChanges();
+           
             // Delete movie from db logic
             return Ok();
         }
