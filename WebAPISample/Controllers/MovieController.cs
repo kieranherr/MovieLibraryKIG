@@ -54,9 +54,9 @@ namespace WebAPISample.Controllers
         {
             // Update movie in db logic
             var movieInDb = _context.Movies.Single(a => a.MovieId == movie.MovieId);
-            movieInDb.Title = movie.Title;
-            movieInDb.Genre = movie.Genre;
-            movieInDb.Director = movie.Director;
+            movie.Title = movieInDb.Title;
+            movie.Genre = movieInDb.Genre;
+            movie.Director = movieInDb.Director;
             _context.SaveChanges();
             return Ok(movieInDb);
         }
